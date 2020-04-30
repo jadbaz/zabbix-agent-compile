@@ -39,16 +39,37 @@ addgroup --system --quiet zabbix
 adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbix --no-create-home zabbix
 
 # compile first without static linking as per: https://www.zabbix.com/forum/zabbix-troubleshooting-and-problems/46215-zabbix-3-0-3-with-tls-support-centos-5-x?p=277199#post277199
+# openssl does not work with static linking, not including '--enable-static option'
 time ./configure --enable-agent --with-openssl=/usr/local/openssl
 # backup
 cp Makefile Makefile.orig
 sed -r 's/(^CFLAGS.*)/\1 -I\/usr\/local\/openssl\/include/' -i Makefile
-sed -r 's/(^LDFLAGS.*)/\1 -L\/usr\/local\/openssl\/lib -static/' -i Makefile
-sed -r 's/(^LIBS.*)/\1 -lssl -lcrypto/' -i Makefile
+sed -r 's/(^CGO_LDFLAGS.*)(-lpcre)(.*)/\1\2 -lpthread\3/' -i Makefile
+sed -r 's/(^LDFLAGS.*)(-rdynamic)(.*)/\1\2 -static\3 -L\/usr\/local\/openssl\/lib/' -i Makefile
+sed -r 's/(^LIBPCRE_LIBS.*)(-lpcre)(.*)/\1\2 -lpthread\3/' -i Makefile
+sed -r 's/(^LIBS.*)(-lpcre)(.*)/\1\2 -lpthread -lssl -lcrypto\3/' -i Makefile
+
+sed -r 's/(^AGENT_LDFLAGS.*)/\1 -L\/usr\/local\/openssl\/lib/' -i Makefile
+sed -r 's/(^AGENT_LIBS.*)/\1 -lssl -lcrypto/' -i Makefile
+sed -r 's/(^CGO_CFLAGS.*)/\1 -L\/usr\/local\/openssl\/include/' -i Makefile
+sed -r 's/(^CGO_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
+sed -r 's/(^OPENSSL_CFLAGS = )/\1 -I\/usr\/local\/openssl\/include/'  -i Makefile
+sed -r 's/(^OPENSSL_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
+sed -r 's/(^PROXY_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
+sed -r 's/(^PROXY_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
+sed -r 's/(^SENDER_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
+sed -r 's/(^SENDER_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
+sed -r 's/(^SERVER_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
+sed -r 's/(^SERVER_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
+sed -r 's/(^TLS_CFLAGS = )/\1 -I\/usr\/local\/openssl\/include/'  -i Makefile
+sed -r 's/(^ZBXGET_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
+sed -r 's/(^ZBXGET_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
+sed -r 's/(^ZBXJS_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
+sed -r 's/(^ZBXJS_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
+
+
 
 # static linking removes runtime dependencies
-time ./configure --enable-agent --enable-static --with-openssl=/usr/local/openssl
-
 time make
 
 ZABBIX_BIN_DIR=zabbix-$ZABBIX_VERSION-`uname -s`_`uname -m`
