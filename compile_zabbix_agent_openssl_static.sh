@@ -59,6 +59,8 @@ tar -czvf ${ZABBIX_BIN_DIR}.tar.gz $ZABBIX_BIN_DIR
 md5sum ${ZABBIX_BIN_DIR}.tar.gz | awk '{print $1}' > ${ZABBIX_BIN_DIR}.tar.gz.md5
 cp -t /tmp/ ${ZABBIX_BIN_DIR}.tar.gz ${ZABBIX_BIN_DIR}.tar.gz.md5
 
+echo
+echo "**********************************************************************"
 echo "Compiled zabbix agent binaries at: /tmp/${ZABBIX_BIN_DIR}.tar.gz"
 echo "md5sum file: /tmp/${ZABBIX_BIN_DIR}.tar.gz.md5"
 echo "md5sum: `cat ${ZABBIX_BIN_DIR}.tar.gz.md5`"
