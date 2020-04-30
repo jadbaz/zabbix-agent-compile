@@ -54,7 +54,11 @@ time make
 ZABBIX_BIN_DIR=zabbix-$ZABBIX_VERSION-`uname -s`_`uname -m`
 mkdir $ZABBIX_BIN_DIR
 cp -t $ZABBIX_BIN_DIR src/zabbix_agent/zabbix_agentd src/zabbix_sender/zabbix_sender src/zabbix_get/zabbix_get
+
 tar -czvf ${ZABBIX_BIN_DIR}.tar.gz $ZABBIX_BIN_DIR
-cp ${ZABBIX_BIN_DIR}.tar.gz /tmp/
+md5sum ${ZABBIX_BIN_DIR}.tar.gz | awk '{print $1}' > ${ZABBIX_BIN_DIR}.tar.gz.md5
+cp -t /tmp/ ${ZABBIX_BIN_DIR}.tar.gz ${ZABBIX_BIN_DIR}.tar.gz.md5
 
 echo "Compiled zabbix agent binaries at: /tmp/${ZABBIX_BIN_DIR}.tar.gz"
+echo "md5sum file: /tmp/${ZABBIX_BIN_DIR}.tar.gz.md5"
+echo "md5sum: `cat ${ZABBIX_BIN_DIR}.tar.gz.md5`"
