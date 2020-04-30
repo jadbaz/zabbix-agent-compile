@@ -40,6 +40,7 @@ adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbi
 
 # openssl does not work with static linking intentionally omitting '--enable-static' option
 # compile first without static linking as per: https://www.zabbix.com/forum/zabbix-troubleshooting-and-problems/46215-zabbix-3-0-3-with-tls-support-centos-5-x?p=277199#post277199
+# because of https://support.zabbix.com/browse/ZBX-17156
 time ./configure --enable-agent --with-openssl=/usr/local/openssl
 # backup
 cp Makefile Makefile.orig
