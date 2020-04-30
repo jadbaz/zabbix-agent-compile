@@ -50,28 +50,6 @@ sed -r 's/(^LDFLAGS.*)(-rdynamic)(.*)/\1\2 -static\3 -L\/usr\/local\/openssl\/li
 sed -r 's/(^LIBPCRE_LIBS.*)(-lpcre)(.*)/\1\2 -lpthread\3/' -i Makefile
 sed -r 's/(^LIBS.*)(-lpcre)(.*)/\1\2 -lpthread -lssl -lcrypto\3/' -i Makefile
 
-
-
-# DISCARD
-sed -r 's/(^AGENT_LDFLAGS.*)/\1 -L\/usr\/local\/openssl\/lib/' -i Makefile
-sed -r 's/(^AGENT_LIBS.*)/\1 -lssl -lcrypto/' -i Makefile
-sed -r 's/(^CGO_CFLAGS.*)/\1 -L\/usr\/local\/openssl\/include/' -i Makefile
-sed -r 's/(^CGO_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
-sed -r 's/(^OPENSSL_CFLAGS = )/\1 -I\/usr\/local\/openssl\/include/'  -i Makefile
-sed -r 's/(^OPENSSL_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
-sed -r 's/(^PROXY_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
-sed -r 's/(^PROXY_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
-sed -r 's/(^SENDER_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
-sed -r 's/(^SENDER_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
-sed -r 's/(^SERVER_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
-sed -r 's/(^SERVER_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
-sed -r 's/(^TLS_CFLAGS = )/\1 -I\/usr\/local\/openssl\/include/'  -i Makefile
-sed -r 's/(^ZBXGET_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
-sed -r 's/(^ZBXGET_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
-sed -r 's/(^ZBXJS_LDFLAGS = )/\1 -L\/usr\/local\/openssl\/lib/'  -i Makefile
-sed -r 's/(^ZBXJS_LIBS = )/\1 -lssl -lcrypto'  -i Makefile
-
-
 time make
 
 ZABBIX_BIN_DIR=zabbix-$ZABBIX_VERSION-`uname -s`_`uname -m`
