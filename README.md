@@ -1,7 +1,9 @@
 # zabbix-agent-compile
 
+Run all steps as root
 ## Download
-`git clone https://github.com/jadbaz/zabbix-agent-compile`
+- cd /usr/local/src
+- `git clone https://github.com/jadbaz/zabbix-agent-compile`
 
 ## Compile
 ### log to stdout
