@@ -14,7 +14,7 @@
 - Result will be created under /tmp/zabbix-${ZABBIX_VERSION}_agent_dist_`uname -s`_`uname -m`.tar.gz
 - Copy this file to target machines
 
-## Install
+## Install on target machine
 ### Download
 Get archive already built and cd into it
 
