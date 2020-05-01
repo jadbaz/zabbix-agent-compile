@@ -21,3 +21,6 @@ test -f "/usr/local/etc/zabbix_agentd.conf" || cp "conf/zabbix_agentd.conf" "/us
 cp init.d/zabbix-agent /etc/init.d/zabbix-agent
 chmod +x /etc/init.d/zabbix-agent
 update-rc.d zabbix-agent defaults
+
+addgroup --system --quiet zabbix
+adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbix --no-create-home zabbix
