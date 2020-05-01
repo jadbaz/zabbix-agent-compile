@@ -40,7 +40,7 @@ cd zabbix-$ZABBIX_VERSION
 addgroup --system --quiet zabbix
 adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbix --no-create-home zabbix
 
-time ./configure --enable-agent --with-openssl=/usr/local/openssl --enable-static-libs --enable-static
+time ./configure --enable-agent --with-openssl=/usr/local/openssl --enable-static-libs
 time make
 
 
