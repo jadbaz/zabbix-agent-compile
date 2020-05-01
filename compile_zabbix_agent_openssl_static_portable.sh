@@ -1,3 +1,5 @@
+wd=`pwd`
+
 PCRE_VERSION=8.44
 ZABBIX_VERSION=4.4.8
 OPENSSL_VERSION=1.1.1g
@@ -54,6 +56,8 @@ cp -t $ZABBIX_PACKAGE_DIR/bin src/zabbix_agent/zabbix_agentd src/zabbix_sender/z
 cp -t $ZABBIX_PACKAGE_DIR/conf conf/zabbix_agentd.conf 
 cp -t $ZABBIX_PACKAGE_DIR/man man/{zabbix_agentd,zabbix_sender,zabbix_get}.man
 cp -t $ZABBIX_PACKAGE_DIR/init.d misc/init.d/debian/zabbix-agent
+
+cp -t $wd/install_zabbix_from_compiled_sources.sh $ZABBIX_PACKAGE_DIR
 
 tar -czf ${ZABBIX_PACKAGE} ${ZABBIX_PACKAGE_DIR}
 md5sum ${ZABBIX_PACKAGE} | awk '{print $1}' > ${ZABBIX_PACKAGE}.md5
