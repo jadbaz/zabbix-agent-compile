@@ -30,7 +30,10 @@ cd openssl-$OPENSSL_VERSION
 time ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl 
 time make
 time make install
-
+# https://github.com/openssl/openssl/issues/3993#issuecomment-337632051
+echo /usr/local/openssl/lib > /etc/ld.so.conf.d/openssl.conf
+ldconfig
+ldconfig -p | grep libssl
 
 ### ZABBIX ####
 cd /usr/local/src
