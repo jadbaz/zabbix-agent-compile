@@ -1,5 +1,5 @@
 PCRE_VERSION=8.44
-ZABBIX_VERSION=4.4.7
+ZABBIX_VERSION=4.4.8
 OPENSSL_VERSION=1.1.1g
 
 ### gcc ###
@@ -32,25 +32,15 @@ time make install
 
 ### ZABBIX ####
 cd /usr/local/src
-wget --no-check-certificate https://fossies.org/linux/misc/zabbix-$ZABBIX_VERSION.tar.gz
+
+wget https://cdn.zabbix.com/stable/$ZABBIX_VERSION/zabbix-$ZABBIX_VERSION.tar.gz
 tar -xzvf zabbix-$ZABBIX_VERSION.tar.gz
 cd zabbix-$ZABBIX_VERSION
+
 addgroup --system --quiet zabbix
 adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbix --no-create-home zabbix
 
-# openssl does not work with static linking intentionally omitting '--enable-static' option
-# compile first without static linking as per: https://www.zabbix.com/forum/zabbix-troubleshooting-and-problems/46215-zabbix-3-0-3-with-tls-support-centos-5-x?p=277199#post277199
-# because of https://support.zabbix.com/browse/ZBX-17156
-time ./configure --enable-agent --with-openssl=/usr/local/openssl
-# backup
-cp Makefile Makefile.orig
-# and then add static linking by editing the file
-sed -r 's/(^CFLAGS.*)/\1 -I\/usr\/local\/openssl\/include/' -i Makefile
-sed -r 's/(^CGO_LDFLAGS.*)(-lpcre)(.*)/\1\2 -lpthread\3/' -i Makefile
-sed -r 's/(^LDFLAGS.*)(-rdynamic)(.*)/\1\2 -static\3 -L\/usr\/local\/openssl\/lib/' -i Makefile
-sed -r 's/(^LIBPCRE_LIBS.*)(-lpcre)(.*)/\1\2 -lpthread\3/' -i Makefile
-sed -r 's/(^LIBS.*)(-lpcre)(.*)/\1\2 -lpthread -lssl -lcrypto\3/' -i Makefile
-
+time ./configure --enable-agent --with-openssl=/usr/local/openssl --enable-static-libs
 time make
 
 ZABBIX_BIN_DIR=zabbix-$ZABBIX_VERSION-`uname -s`_`uname -m`
