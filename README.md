@@ -2,7 +2,7 @@
 
 Run all steps as root
 ## Download
-- cd /usr/local/src
+- `cd /usr/local/src`
 - `git clone https://github.com/jadbaz/zabbix-agent-compile`
 
 ## Compile
