@@ -11,7 +11,7 @@
 
 dir="/tmp"
 cmd="/usr/local/sbin"
-user=""
+user="zabbix"
 
 name=`basename $0`
 pid_file="/var/run/$name.pid"
