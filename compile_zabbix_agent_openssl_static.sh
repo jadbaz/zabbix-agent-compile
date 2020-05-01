@@ -42,19 +42,20 @@ adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbi
 
 time ./configure --enable-agent --with-openssl=/usr/local/openssl --enable-static-libs
 time make
+# make install if you want to install here
+# time make install
 
 
 ### PACKAGE FOR USE ELSEWHERE ###
-# remove unused large directories and remove their inclusion in all Makefile
-rm -rf frontends database
-sed -r '/^[\s\t]*database/d' -i Makefile
-rm -rf src/libs
-sed -r '/^[\s\t]*\$\(COMMON_SUBDIRS\)/d' -i src/Makefile
+ZABBIX_PACKAGE_DIR="zabbix-${ZABBIX_VERSION}_agent_dist_`uname -s`_`uname -m`"
+ZABBIX_PACKAGE="${ZABBIX_PACKAGE_DIR}.tar.gz"
+mkdir -p $ZABBIX_PACKAGE_DIR/{bin,conf,man,init.d}
+cp -t $ZABBIX_PACKAGE_DIR/bin src/zabbix_agent/zabbix_agentd src/zabbix_sender/zabbix_sender src/zabbix_get/zabbix_get
+cp -t $ZABBIX_PACKAGE_DIR/conf conf/zabbix_agentd.conf 
+cp -t $ZABBIX_PACKAGE_DIR/man man/{zabbix_agentd,zabbix_sender,zabbix_get}.man
+cp -t $ZABBIX_PACKAGE_DIR/init.d misc/init.d/debian/zabbix-agent
 
-
-cd ..
-ZABBIX_PACKAGE="zabbix-${ZABBIX_VERSION}_agent_dist_`uname -s`_`uname -m`.tar.gz"
-tar -czf ${ZABBIX_PACKAGE} zabbix-${ZABBIX_VERSION}
+tar -czf ${ZABBIX_PACKAGE} ${ZABBIX_PACKAGE_DIR}
 md5sum ${ZABBIX_PACKAGE} | awk '{print $1}' > ${ZABBIX_PACKAGE}.md5
 cp -t /tmp/ ${ZABBIX_PACKAGE} ${ZABBIX_PACKAGE}.md5
 
