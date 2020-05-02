@@ -28,6 +28,7 @@ ldconfig
 
 # this was added in agent 4.4.7
 # https://fossies.org/diffs/zabbix/4.4.6_vs_4.4.7/configure-diff.html
+# https://stackoverflow.com/questions/23202146/cannot-find-pkg-config-error/31874015#31874015
 ### pkg-config ###
 if ! [ `which pkg-config` ]
 then
@@ -36,7 +37,8 @@ then
   wget --no-check-certificate https://pkgconfig.freedesktop.org/releases/pkg-config-${PKGCONFIG_VERSION}.tar.gz
   tar -xzf pkg-config-${PKGCONFIG_VERSION}.tar.gz
   cd pkg-config-${PKGCONFIG_VERSION}
-  time ./configure
+  
+  time ./configure --with-internal-glib
   time make
   time make install
 fi
