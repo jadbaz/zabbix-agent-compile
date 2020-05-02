@@ -6,11 +6,11 @@ Run all steps as root
 - `git clone https://github.com/jadbaz/zabbix-agent-compile`
 
 ## Compile
-### log to stdout
+### foreground
 `sh compile_zabbix_agent_openssl_static_portable.sh`
 
-### log to file
-`sh compile_zabbix_agent_openssl_static_portable.sh >> zabbix_compile.log 2>&1`
+### background
+`nohup sh compile_zabbix_agent_openssl_static_portable.sh >> zabbix_compile.log 2>&1 &`
 
 ### Result
 - Result will be created under /tmp/zabbix-${ZABBIX_VERSION}_agent_dist_`uname -s`_`uname -m`.tar.gz
