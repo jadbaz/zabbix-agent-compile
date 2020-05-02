@@ -2,7 +2,13 @@ wd=`pwd`
 
 PCRE_VERSION=8.44
 ZABBIX_VERSION=4.4.8
-OPENSSL_VERSION=1.1.1g
+OPENSSL_VERSION=1_1_0l
+
+#OPENSSL 1.1.1 doesn't work with Zabbix:
+#https://support.zabbix.com/browse/ZBX-14860
+#https://github.com/openssl/openssl/issues/7241
+#OPENSSL_VERSION=1.1.1g
+
 
 ### gcc ###
 test ! `which gcc` && test `which apt-get` && apt-get install g++
@@ -23,9 +29,9 @@ ldconfig
 ### OpenSSL ###
 # https://unix.stackexchange.com/questions/293311/install-openssl-from-source
 cd /usr/local/src
-wget https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
-tar -xzf openssl-$OPENSSL_VERSION.tar.gz
-cd openssl-$OPENSSL_VERSION
+wget https://github.com/openssl/openssl/archive/OpenSSL_${OPENSSL_VERSION}.tar.gz
+tar -xzf OpenSSL_${OPENSSL_VERSION}.tar.gz
+cd openssl-OpenSSL_${OPENSSL_VERSION}
 
 time ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl 
 time make
