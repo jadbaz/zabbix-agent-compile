@@ -3,6 +3,7 @@ wd=`pwd`
 PCRE_VERSION=8.44
 ZABBIX_VERSION=4.4.8
 OPENSSL_VERSION=1_1_0l
+PKGCONFIG_VERSION=0.29.2
 
 #OPENSSL 1.1.1 doesn't work with Zabbix:
 #https://support.zabbix.com/browse/ZBX-14860
@@ -25,6 +26,20 @@ time make
 time make install
 ldconfig
 
+# this was added in agent 4.4.7
+# https://fossies.org/diffs/zabbix/4.4.6_vs_4.4.7/configure-diff.html
+### pkg-config ###
+if ! [ `which pkg-config` ]
+then
+  echo "INSTALLING pkg-config"
+  cd /usr/local/src
+  wget --no-check-certificate https://pkgconfig.freedesktop.org/releases/pkg-config-${PKGCONFIG_VERSION}.tar.gz
+  tar -xzf pkg-config-${PKGCONFIG_VERSION}.tar.gz
+  cd pkg-config-${PKGCONFIG_VERSION}
+  time ./configure
+  time make
+  time make install
+fi
 
 ### OpenSSL ###
 # https://unix.stackexchange.com/questions/293311/install-openssl-from-source
