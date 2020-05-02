@@ -16,7 +16,7 @@ test ! `which gcc` && test `which yum` && yum install g++
 
 ### PCRE ###
 cd /usr/local/src
-wget https://ftp.pcre.org/pub/pcre/pcre-$PCRE_VERSION.zip
+wget --no-check-certificate https://ftp.pcre.org/pub/pcre/pcre-$PCRE_VERSION.zip
 unzip pcre-$PCRE_VERSION.zip
 cd pcre-$PCRE_VERSION
 
@@ -29,7 +29,7 @@ ldconfig
 ### OpenSSL ###
 # https://unix.stackexchange.com/questions/293311/install-openssl-from-source
 cd /usr/local/src
-wget https://github.com/openssl/openssl/archive/OpenSSL_${OPENSSL_VERSION}.tar.gz
+wget --no-check-certificate https://github.com/openssl/openssl/archive/OpenSSL_${OPENSSL_VERSION}.tar.gz
 tar -xzf OpenSSL_${OPENSSL_VERSION}.tar.gz
 cd openssl-OpenSSL_${OPENSSL_VERSION}
 
@@ -44,7 +44,7 @@ ldconfig -p | grep libssl
 ### ZABBIX ####
 cd /usr/local/src
 
-wget https://cdn.zabbix.com/stable/$ZABBIX_VERSION/zabbix-$ZABBIX_VERSION.tar.gz
+wget --no-check-certificate https://cdn.zabbix.com/stable/$ZABBIX_VERSION/zabbix-$ZABBIX_VERSION.tar.gz
 tar -xzf zabbix-$ZABBIX_VERSION.tar.gz
 cd zabbix-$ZABBIX_VERSION
 
