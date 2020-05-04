@@ -85,6 +85,7 @@ cp -t $ZABBIX_PACKAGE_DIR/init.d misc/init.d/debian/zabbix-agent
 
 #cp $wd/zabbix-agent.init $ZABBIX_PACKAGE_DIR/init.d/zabbix-agent
 cp $wd/install_zabbix_from_compiled_sources.sh $ZABBIX_PACKAGE_DIR
+cp $wd/uninstall.sh $ZABBIX_PACKAGE_DIR
 
 tar -czf ${ZABBIX_PACKAGE} ${ZABBIX_PACKAGE_DIR}
 md5sum ${ZABBIX_PACKAGE} | awk '{print $1}' > ${ZABBIX_PACKAGE}.md5
