@@ -1,3 +1,7 @@
+service zabbix-agent stop
+sleep 1
+pkill zabbix_agentd
+
 rm -f /usr/local/bin/zabbix_sender
 rm -f /usr/local/bin/zabbix_get
 
