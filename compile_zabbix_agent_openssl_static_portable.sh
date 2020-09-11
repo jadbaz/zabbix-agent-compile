@@ -19,6 +19,16 @@ PKGCONFIG_VERSION=0.29.2
 test ! `which gcc` && test `which apt-get` && apt-get install g++
 test ! `which gcc` && test `which yum` && yum install g++
 
+### zlib (required for agent2) ###
+cd /usr/local/src
+wget https://github.com/madler/zlib/archive/master.tar.gz
+tar -xzf zlib-master.tar.gz
+cd zlib-master
+time ./configure
+time make
+time make install
+
+
 ### PCRE ###
 cd /usr/local/src
 wget --no-check-certificate https://ftp.pcre.org/pub/pcre/pcre-$PCRE_VERSION.zip
