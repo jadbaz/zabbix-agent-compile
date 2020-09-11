@@ -77,6 +77,8 @@ time ./configure --enable-agent --with-openssl=/usr/local/openssl --enable-stati
 # for agent 2
 time ./configure --enable-agent2 --with-openssl=/usr/local/openssl --enable-static-libs
 
+# agent 2: make sure to have proxy.golang.org root CA cert in one of golang's ca cert lookups (eg: /etc/ssl/certs/ca-certificates.crt)
+
 time make
 # make install if you want to install here
 # time make install
