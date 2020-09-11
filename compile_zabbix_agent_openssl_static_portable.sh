@@ -1,3 +1,6 @@
+# Requirements
+# - golang toolchain (ref: https://github.com/jadbaz/golang-toolchain-installation)
+
 wd=`pwd`
 
 PCRE_VERSION=8.44
