@@ -4,7 +4,8 @@
 wd=`pwd`
 
 PCRE_VERSION=8.44
-ZABBIX_VERSION=4.4.8
+ZABBIX_MAJOR_VERSION=5.0
+ZABBIX_VERSION=5.0.3
 OPENSSL_VERSION=1_1_0l
 PKGCONFIG_VERSION=0.29.2
 
@@ -64,14 +65,18 @@ ldconfig -p | grep libssl
 ### ZABBIX ####
 cd /usr/local/src
 
-wget --no-check-certificate https://cdn.zabbix.com/stable/$ZABBIX_VERSION/zabbix-$ZABBIX_VERSION.tar.gz
+wget --no-check-certificate https://cdn.zabbix.com/zabbix/sources/stable/$ZABBIX_MAJOR_VERSION/zabbix-$ZABBIX_VERSION.tar.gz
 tar -xzf zabbix-$ZABBIX_VERSION.tar.gz
 cd zabbix-$ZABBIX_VERSION
 
 addgroup --system --quiet zabbix
 adduser --quiet --system --disabled-login --ingroup zabbix --home /var/lib/zabbix --no-create-home zabbix
 
+# for agent 1
 time ./configure --enable-agent --with-openssl=/usr/local/openssl --enable-static-libs
+# for agent 2
+time ./configure --enable-agent2 --with-openssl=/usr/local/openssl --enable-static-libs
+
 time make
 # make install if you want to install here
 # time make install
